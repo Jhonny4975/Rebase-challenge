@@ -20,6 +20,8 @@ gem 'sinatra-activerecord'
 gem 'sinatra'
 
 group :development, :test do
+  gem 'database_cleaner'
   gem 'pry-byebug'
+  gem 'rack-test'
   gem 'rspec'
 end
