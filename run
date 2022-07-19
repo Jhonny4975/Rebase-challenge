@@ -1,9 +1,30 @@
 #!/bin/bash
 
+echo '------ loading database ---'
+echo
+
 docker run \
-  --rm \
-  -w /app \
-  -v $(pwd):/app \
-  -p 3000:3000 \
-  ruby \
-  bash -c "gem install rack sinatra puma && ruby server.rb"
+ --rm --name pg-docker \
+ -e POSTGRES_PASSWORD=postgres \
+ -d -p 5432:5432 \
+ -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data \
+ postgres
+
+sleep 7
+
+echo '------ database loaded! ---'
+echo
+echo '------ building -----------'
+echo
+
+docker-compose build
+
+echo
+echo '------ build finished -----'
+echo
+echo '------ starting the app ---'
+echo
+
+docker-compose up
+echo
+echo '------ finishing ----------'
