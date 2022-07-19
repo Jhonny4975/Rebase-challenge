@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+  server:
+    build: .
+    container_name: medical_exams
+    hostname: medical_exams
+    ports:
+      - "3000:3000"
+    environment:
+      - BUNDLE_PATH=vendor/bundle
+      - BUNDLE_DISABLE_SHARED_GEMS=1
+    working_dir: /var/www/medical_exams
+    volumes:
+      - .:/var/www/medical_exams:Z
+    command: >
+      bash -c "rake db:create db:migrate
+      && ruby server.rb"
+    depends_on:
+      - db
