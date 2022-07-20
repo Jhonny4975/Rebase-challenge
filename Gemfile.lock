@@ -72,7 +72,7 @@ GEM
       activerecord (>= 4.1)
       sinatra (>= 1.0)
     tilt (2.0.10)
-    tzinfo (2.0.4)
+    tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
 
 PLATFORMS
