@@ -6,9 +6,13 @@ RUN apk add --update --no-cache \
     coreutils \
     git \
     postgresql-dev \
+    less \
     tzdata
 
 WORKDIR /var/www/medical_exams
+
+RUN cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+RUN echo "America/Sao_Paulo" >  /etc/timezone
 
 COPY Gemfile Gemfile
 

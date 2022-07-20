@@ -3,9 +3,16 @@ version: '3.8'
 services:
   db:
     image: postgres
+    container_name: pg-docker
+    ports:
+      - "5432:5432"
     restart: always
     environment:
       POSTGRES_PASSWORD: postgres
+    volumes:
+      - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
+    networks:
+      - exam_app
   server:
     build: .
     container_name: medical_exams
@@ -23,3 +30,7 @@ services:
       && ruby server.rb"
     depends_on:
       - db
+    networks:
+      - exam_app
+networks:
+  exam_app:
