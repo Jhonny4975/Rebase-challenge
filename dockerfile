@@ -1,5 +1,9 @@
 FROM ruby:3.1.0-alpine
 
+LABEL name="Alpine-Ruby-3.1.0" \
+      version="1.0" \
+      author="Jhonny Toledo"
+
 RUN apk add --update --no-cache \
     build-base \
     bash \
@@ -23,3 +27,7 @@ RUN gem update --system && \
     gem cleanup
 
 RUN bundle install
+
+EXPOSE 3000
+
+CMD bundle exec rails s -b 0.0.0.0 -p 3000
