@@ -4,18 +4,21 @@ This project is a challenge proposed by Rebase, it is an API in Ruby for listing
 
 ### Tech Stack
 
-- Docker
 - Ruby
 - Sinatra
+- Docker
+- Redis
+- Sidekiq
 
 ## Install project
 
 ### Requirements:
 
-Only two tools are strictly needed:
+Only three tools are strictly needed:
 
 - git;
-- [docker](https://docs.docker.com/get-docker/).
+- [docker](https://docs.docker.com/get-docker/);
+- [docker-compose](https://docs.docker.com/compose/install/).
 
 ### Steps
 
@@ -73,4 +76,14 @@ Wow, it worked, we have a lot of exams now! But what if we want to save our own 
 
 ![POST](https://img.shields.io/badge/-GET-blue "GET")![/import](https://img.shields.io/badge/-/import-grey "/import")
 
-Sorry, this step is still under construction
+For this step, with the server running, run the client API and make a post request to the `http://localhost:3000/import` route, don't forget to upload your csv file before submitting.
+
+If you forget or upload a document that is not a csv, you will see an error like this:
+
+![Screenshot_20220721_154546](https://user-images.githubusercontent.com/60988594/180292332-67f83bda-268b-4dd4-83ad-45835a183790.png)
+
+Here is an example request using Insomnia:
+
+![Screenshot_20220721_155210](https://user-images.githubusercontent.com/60988594/180293841-6a560e6f-6cd4-4dd5-bd8b-816ac3586e48.png)
+
+Now make a GET request to `/tests` again and see the csv data you just sent.
