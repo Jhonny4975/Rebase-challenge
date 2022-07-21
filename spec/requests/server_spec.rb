@@ -61,4 +61,29 @@ RSpec.describe Server, type: :request do
       end
     end
   end
+
+  describe 'GET /tests/:token' do
+    context 'with valid params' do
+      it 'returns exam details' do
+        fake_result = JSON.parse(File.read('spec/support/exam_serialized_json.json'))
+        rows = CSV.read('spec/support/medical_exam_csv.csv', col_sep: ';')
+        rows.shift
+        CsvDataHandler.import(rows)
+
+        response = get '/tests/IQCZ17'
+
+        expect(response.status).to eq 200
+        expect(JSON.parse(response.body)).to eq(fake_result)
+      end
+    end
+
+    context 'with invalid params' do
+      it 'returns not found' do
+        response = get '/tests/WHATEVER'
+
+        expect(response.status).to eq 404
+        expect(JSON.parse(response.body)['error']).to eq 'Could not find exam with given data.'
+      end
+    end
+  end
 end
