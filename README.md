@@ -87,3 +87,19 @@ Here is an example request using Insomnia:
 ![Screenshot_20220721_155210](https://user-images.githubusercontent.com/60988594/180293841-6a560e6f-6cd4-4dd5-bd8b-816ac3586e48.png)
 
 Now make a GET request to `/tests` again and see the csv data you just sent.
+
+### View details of a medical exam
+
+![GET](https://img.shields.io/badge/-GET-green "GET")![/tests/:token](https://img.shields.io/badge/-/tests/:token-grey "/tests/:token")
+
+With the server running, run your client API and make a get request for the `http://localhost:3000/tests/:token` route.
+
+Example:
+
+![Screenshot_20220721_195708](https://user-images.githubusercontent.com/60988594/180328710-057e782a-6fdb-48a9-9d02-ef0ea6d2d79f.png)
+
+If the token is invalid, you will see something like:
+
+![Screenshot_20220721_193815](https://user-images.githubusercontent.com/60988594/180328789-150b13fb-ebdf-412d-8e25-0359774c6ba7.png)
+
+
