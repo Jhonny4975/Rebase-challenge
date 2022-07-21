@@ -28,4 +28,35 @@ RSpec.describe Server, type: :request do
       end
     end
   end
+
+  describe 'POST /import' do
+    context 'with valid params' do
+      xit 'import the CSV data into the database' do
+        # descobrir como testar isso
+        response = post '/import', csv: { type: 'text/csv', tempfile: 'spec/support/medical_exam_csv.csv' }
+
+        expect(response.status).to eq 200
+        expect(JSON.parse(response.body)['message']).to eq 'Success! Registration will be carried out soon.'
+        expect(MedicalExam.count).to eq 11
+      end
+    end
+
+    context 'with invalid params' do
+      it 'returns an error when receiving an invalid parameter' do
+        response = post '/import', csv: { type: '' }
+
+        expect(response.status).to eq 412
+        expect(JSON.parse(response.body)['error']).to eq 'Could not continue, unrecognized file type.'
+        expect(MedicalExam.count).to eq 0
+      end
+
+      it 'returns an error when receiving an invalid parameter' do
+        response = post '/import', 'invalid'
+
+        expect(response.status).to eq 412
+        expect(JSON.parse(response.body)['error']).to eq 'Could not continue, unrecognized file type.'
+        expect(MedicalExam.count).to eq 0
+      end
+    end
+  end
 end
