@@ -6,7 +6,6 @@ require File.expand_path('../config/environment.rb', __dir__)
 require 'sinatra'
 require 'rack'
 require 'rack/test'
-require './server'
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods

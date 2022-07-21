@@ -1,23 +1,25 @@
 # frozen_string_literal: true
 
-require 'sinatra/activerecord'
 require 'sinatra/activerecord/rake'
+require './services/csv_data_handler'
 
 namespace :db do
   namespace :seed do
     desc 'database population'
     task :csv_data_import do
-      require './services/import_from_csv'
+      puts '---- Starting ----'
 
       MedicalExam.delete_all
 
-      puts '---- Starting ----'
+      rows = CSV.read('./data.csv', col_sep: ';')
 
-      message = CsvDataHandler.import('./data.csv')
+      rows.shift
+      CsvDataHandler.import(rows)
 
       exams_count = MedicalExam.count
+      message = '- Successfully imported data'
 
-      message = '- Successfully imported data' if message.nil?
+      message = 'Something went wrong!' if exams_count.zero?
 
       puts message
       puts " - #{exams_count} exams saved!"
