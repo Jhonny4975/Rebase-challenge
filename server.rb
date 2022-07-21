@@ -4,11 +4,16 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require 'rack/handler/puma'
 require './models/medical_exam'
-require './services/import_from_csv'
+require './services/csv_data_handler'
 
 class Server < Sinatra::Base
   configure :production, :development do
     enable :logging
+  end
+
+  configure :development do
+    disable :raise_errors
+    disable :show_exceptions
   end
 
   set :bind, '0.0.0.0'
@@ -16,6 +21,17 @@ class Server < Sinatra::Base
 
   get '/tests' do
     MedicalExam.all.to_json(except: %i[id created_at updated_at])
+  end
+
+  post '/import' do
+    return 412 unless !params[:csv].nil? && params[:csv][:type] == 'text/csv'
+
+    CsvDataHandler.measure(params[:csv][:tempfile])
+    { message: 'Success! Registration will be carried out soon.' }.to_json
+  end
+
+  error 412 do
+    { error: 'Could not continue, unrecognized file type.' }.to_json
   end
 
   run! if app_file == $PROGRAM_NAME
