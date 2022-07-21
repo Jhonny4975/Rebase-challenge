@@ -18,7 +18,9 @@ RSpec.describe Server, type: :request do
 
     context 'when there is exams' do
       it 'returns a json with all the exam data' do
-        CsvDataHandler.import('spec/support/medical_exam_csv.csv')
+        rows = CSV.read('spec/support/medical_exam_csv.csv', col_sep: ';')
+        rows.shift
+        CsvDataHandler.import(rows)
 
         response = get '/tests'
 
