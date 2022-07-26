@@ -20,13 +20,13 @@ services:
       - db
 
   sidekiq:
-    image: ruby:3.1.0
+    build: .
     container_name: sidekiq
     restart: always
     working_dir: /var/www/medical_exams
     volumes:
       - .:/var/www/medical_exams:Z
-    command: bash -c "bundle && sidekiq -r ./config/sidekiq.rb -c 5"
+    command: bash -c "sidekiq -r ./config/sidekiq.rb -c 5"
     depends_on:
       - redis
 
@@ -48,7 +48,3 @@ services:
       && ruby server.rb"
     depends_on:
       - sidekiq
-
-networks:
-  default:
-      name: exam_app
